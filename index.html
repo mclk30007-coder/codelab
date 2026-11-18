@@ -1,0 +1,596 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CODELAB | Aprenda. Pratique. Desenvolva.</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* CRÉDITOS DO GRUPO */
+    .credits-section {
+      margin-top: 35px;
+      padding: 35px;
+      background: #fff;
+      border: 1px solid #e6edf8;
+      border-radius: 18px;
+    }
+
+    .credits-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .credits-tag {
+      color: #0868f7;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .credits-header h2 {
+      color: #101b31;
+      font-size: 30px;
+      margin: 12px 0;
+    }
+
+    .credits-header p {
+      color: #52617a;
+      line-height: 1.6;
+    }
+
+    .credits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .credit-card {
+      border: 1px solid #e6edf8;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #fff;
+      transition: .25s;
+    }
+
+    .credit-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(16,27,49,.10);
+    }
+
+    .credit-photo {
+      height: 220px;
+      background: #f2f7ff;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .credit-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .credit-photo.has-photo img {
+      display: block;
+    }
+
+    .credit-placeholder {
+      text-align: center;
+      color: #52617a;
+    }
+
+    .credit-placeholder strong {
+      display: block;
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    .credit-photo.has-photo .credit-placeholder {
+      display: none;
+    }
+
+    .photo-upload {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0868f7;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 3px 10px #0002;
+    }
+
+    .credit-photo input {
+      display: none;
+    }
+
+    .credit-info {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .credit-info h3 {
+      color: #101b31;
+      font-size: 20px;
+      margin: 0 0 8px;
+    }
+
+    .credit-info span {
+      display: inline-block;
+      color: #0868f7;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .credit-info p {
+      color: #52617a;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .credits-footer {
+      text-align: center;
+      margin-top: 35px;
+      color: #52617a;
+      font-size: 13px;
+    }
+
+    .credits-footer strong {
+      color: #0868f7;
+      letter-spacing: 3px;
+    }
+
+    @media(max-width: 900px) {
+      .credits-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media(max-width: 600px) {
+      .credits-section {
+        padding: 20px 14px;
+      }
+
+      .credits-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .credit-photo {
+        height: 260px;
+      }
+
+      .credits-header h2 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <aside class="sidebar">
+      <a class="brand" href="#">
+        <span class="brand-icon">&lt;/&gt;</span> CODELAB
+      </a>
+
+      <nav class="menu" aria-label="Menu principal">
+        <a class="menu-link active" href="#inicio">⌂ <span>Início</span></a>
+        <a class="menu-link" href="#cursos">▣ <span>Cursos</span></a>
+        <a class="menu-link" href="#laboratorio">▧ <span>Laboratório</span></a>
+        <a class="menu-link" href="#exercicios">☑ <span>Exercícios</span></a>
+        <a class="menu-link" href="#projetos">♧ <span>Projetos</span></a>
+        <a class="menu-link" href="#progresso">↗ <span>Meu Progresso</span></a>
+        <a class="menu-link" href="#creditos">🏆 <span>Créditos do Grupo</span></a>
+      </nav>
+
+      <div class="sidebar-progress" id="progresso">
+        <div class="trophy">🏆</div>
+        <p>Seu progresso</p>
+        <strong id="progress-percent">0%</strong>
+        <div class="progress-track">
+          <span id="progress-bar"></span>
+        </div>
+      </div>
+
+      <p class="sidebar-note">Seu espaço para aprender programação.</p>
+    </aside>
+
+    <main class="main" id="inicio">
+
+      <header class="topbar">
+        <label class="search">
+          ⌕
+          <input id="search-input" type="search" placeholder="Pesquisar aulas...">
+        </label>
+
+        <div class="top-actions">
+          <button class="icon-button" aria-label="Notificações">♧</button>
+          <div class="avatar">A</div>
+        </div>
+      </header>
+
+      <!-- INÍCIO -->
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Aprenda Programação de Verdade</span>
+          <h1>CODE<span>LAB</span></h1>
+          <h2>Aprenda. Pratique. Desenvolva.</h2>
+
+          <p>
+            Uma plataforma completa para você aprender HTML,
+            CSS e JavaScript de forma simples e interativa.
+          </p>
+
+          <div class="hero-buttons">
+            <a class="button primary" href="#cursos">▷ &nbsp; Começar Agora</a>
+            <a class="button secondary" href="#cursos">Explorar Cursos</a>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-label="Ilustração de programação">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="tech html">5</div>
+          <div class="tech css">3</div>
+          <div class="tech js">JS</div>
+
+          <div class="laptop">
+            <div class="screen">
+              <div class="screen-dots"><i></i><i></i><i></i></div>
+              <pre><span>&lt;!DOCTYPE html&gt;</span>
+&lt;html lang="pt-br"&gt;
+  &lt;head&gt;
+    &lt;title&gt;CODELAB&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    <b>&lt;h1&gt;Aprenda Programação!&lt;/h1&gt;</b>
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+            </div>
+            <div class="keyboard"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ATALHOS -->
+      <section class="quick-grid" aria-label="Atalhos">
+        <a class="quick-card" href="#cursos">
+          <b>〈/〉</b>
+          <strong>Cursos</strong>
+          <span>Do Básico ao Avançado</span>
+        </a>
+
+        <a class="quick-card" href="#laboratorio">
+          <b>♜</b>
+          <strong>Laboratório</strong>
+          <span>Teste seus códigos</span>
+        </a>
+
+        <a class="quick-card" href="#exercicios">
+          <b>☑</b>
+          <strong>Exercícios</strong>
+          <span>Pratique o que aprendeu</span>
+        </a>
+
+        <a class="quick-card" href="#projetos">
+          <b>🚀</b>
+          <strong>Projetos</strong>
+          <span>Construa sites incríveis</span>
+        </a>
+
+        <a class="quick-card" href="#progresso">
+          <b>↗</b>
+          <strong>Acompanhe</strong>
+          <span>Seu progresso</span>
+        </a>
+      </section>
+
+      <!-- CURSOS -->
+      <section class="content-section" id="cursos">
+        <div class="section-heading">
+          <h3>Nossos Cursos</h3>
+          <a href="#cursos">Ver todos →</a>
+        </div>
+
+        <div class="course-layout">
+          <div class="course-grid">
+
+            <article class="course-card searchable" data-search="html estrutura páginas web curso">
+              <div class="course-logo html-logo">5</div>
+              <div class="course-info">
+                <h4>HTML</h4>
+                <p>Aprenda a estruturar páginas web.</p>
+                <button class="small-button lesson-button" data-course="HTML">
+                  Acessar Curso →
+                </button>
+              </div>
+            </article>
+
+            <article class="course-card searchable" data-search="css estilos cores design curso">
+              <div class="course-logo css-logo">3</div>
+              <div class="course-info">
+                <h4>CSS</h4>
+                <p>Deixe seus sites ainda mais bonitos.</p>
+                <button class="small-button lesson-button" data-course="CSS">
+                  Acessar Curso →
+                </button>
+              </div>
+            </article>
+
+            <article class="course-card searchable" data-search="javascript interação programação curso">
+              <div class="course-logo js-logo">JS</div>
+              <div class="course-info">
+                <h4>JavaScript</h4>
+                <p>Adicione interatividade aos seus projetos.</p>
+                <button class="small-button lesson-button" data-course="JavaScript">
+                  Acessar Curso →
+                </button>
+              </div>
+            </article>
+
+          </div>
+
+          <aside class="lab-promo" id="laboratorio">
+            <div class="lab-symbol">&lt;/&gt;</div>
+            <h3>Laboratório de Código</h3>
+            <p>Escreva, execute e veja o resultado em tempo real!</p>
+            <a class="button primary" href="#code-lab">Abrir Laboratório →</a>
+            <div class="mini-window">&lt;/&gt;</div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- LABORATÓRIO -->
+      <section class="lab-section" id="code-lab">
+        <div class="section-heading">
+          <h3>Laboratório de Código</h3>
+          <span class="live-label">● Ao vivo</span>
+        </div>
+
+        <p class="section-description">
+          Edite o exemplo e clique em executar para ver sua página funcionando.
+        </p>
+
+        <div class="editor">
+          <div class="editor-head">
+            <span>index.html</span>
+            <button id="run-code" class="small-button">▶ Executar</button>
+          </div>
+
+          <textarea id="code-input" spellcheck="false"><h1>Olá, CODELAB!</h1>
+<p>Meu primeiro código está funcionando.</p>
+<button onclick="alert('Você conseguiu!')">Clique aqui</button></textarea>
+
+          <div class="preview-label">Pré-visualização</div>
+          <iframe id="code-preview" title="Pré-visualização do código"></iframe>
+        </div>
+      </section>
+
+      <!-- EXERCÍCIOS E PROJETOS -->
+      <section class="bottom-grid">
+
+        <article class="info-card searchable" id="exercicios" data-search="exercícios desafios pratique">
+          <div class="info-icon">☑</div>
+          <h3>Exercícios e desafios</h3>
+          <p>Teste seus conhecimentos com atividades práticas.</p>
+          <button class="text-button" id="exercise-button">
+            Marcar exercício como concluído →
+          </button>
+        </article>
+
+        <article class="info-card searchable" id="projetos" data-search="projetos criar sites prática">
+          <div class="info-icon">🚀</div>
+          <h3>Aprenda criando projetos</h3>
+          <p>Transforme o que aprendeu em páginas e experiências reais.</p>
+          <a class="text-button" href="#laboratorio">Começar a criar →</a>
+        </article>
+
+      </section>
+
+      <!-- CRÉDITOS DO GRUPO -->
+      <section class="credits-section searchable" id="creditos" data-search="créditos grupo participantes equipe desenvolvimento design ideias conteúdo">
+
+        <div class="credits-header">
+          <span class="credits-tag">NOSSA EQUIPE</span>
+          <h2>Créditos do Grupo</h2>
+          <p>
+            Conheça as pessoas que participaram da criação
+            e desenvolvimento do CODELAB.
+          </p>
+        </div>
+
+        <div class="credits-grid">
+
+          <!-- ALEX -->
+          <article class="credit-card">
+            <div class="credit-photo" id="area-alex">
+              <img id="foto-alex" alt="Foto de Alex">
+
+              <div class="credit-placeholder">
+                <strong>👤</strong>
+                Adicione sua foto
+              </div>
+
+              <label class="photo-upload" for="upload-alex">
+                📷 Adicionar / trocar foto
+              </label>
+
+              <input type="file" id="upload-alex" accept="image/*">
+            </div>
+
+            <div class="credit-info">
+              <h3>Alex</h3>
+              <span>DESENVOLVIMENTO</span>
+              <p>
+                Desenvolvimento do projeto,
+                ideias, planejamento e criação dos conteúdos.
+              </p>
+            </div>
+          </article>
+
+          <!-- ARTUR BERNARDO -->
+          <article class="credit-card">
+            <div class="credit-photo" id="area-artur">
+              <img id="foto-artur" alt="Foto de Artur Bernardo">
+
+              <div class="credit-placeholder">
+                <strong>👤</strong>
+                Adicione sua foto
+              </div>
+
+              <label class="photo-upload" for="upload-artur">
+                📷 Adicionar / trocar foto
+              </label>
+
+              <input type="file" id="upload-artur" accept="image/*">
+            </div>
+
+            <div class="credit-info">
+              <h3>Artur Bernardo</h3>
+              <span>DESIGN</span>
+              <p>
+                Criação visual, design
+                e participação nas ideias do projeto.
+              </p>
+            </div>
+          </article>
+
+          <!-- MATEUS -->
+          <article class="credit-card">
+            <div class="credit-photo" id="area-mateus">
+              <img id="foto-mateus" alt="Foto de Mateus">
+
+              <div class="credit-placeholder">
+                <strong>👤</strong>
+                Adicione sua foto
+              </div>
+
+              <label class="photo-upload" for="upload-mateus">
+                📷 Adicionar / trocar foto
+              </label>
+
+              <input type="file" id="upload-mateus" accept="image/*">
+            </div>
+
+            <div class="credit-info">
+              <h3>Mateus</h3>
+              <span>IDEIAS E PLANEJAMENTO</span>
+              <p>
+                Participação nas ideias
+                e no planejamento do projeto.
+              </p>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="credits-footer">
+          <strong>CODELAB</strong>
+          <p>Um projeto construído em equipe.</p>
+        </div>
+
+      </section>
+
+      <footer>
+        CODELAB <span>•</span> Aprenda. Pratique. Desenvolva.
+      </footer>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- FOTOS DOS PARTICIPANTES -->
+  <script>
+    const participantes = ["alex", "artur", "mateus"];
+
+    participantes.forEach(nome => {
+      const input = document.getElementById("upload-" + nome);
+      const img = document.getElementById("foto-" + nome);
+      const area = document.getElementById("area-" + nome);
+
+      // Recupera a foto salva anteriormente
+      try {
+        const fotoSalva = localStorage.getItem("codelab-foto-" + nome);
+
+        if (fotoSalva) {
+          img.src = fotoSalva;
+          area.classList.add("has-photo");
+        }
+      } catch (erro) {
+        console.log("Não foi possível recuperar a foto.");
+      }
+
+      input.addEventListener("change", function() {
+        const arquivo = this.files[0];
+
+        if (!arquivo) return;
+
+        if (!arquivo.type.startsWith("image/")) {
+          alert("Escolha um arquivo de imagem.");
+          return;
+        }
+
+        const leitor = new FileReader();
+
+        leitor.onload = function(evento) {
+          const imagem = new Image();
+
+          imagem.onload = function() {
+            const canvas = document.createElement("canvas");
+            const limite = 700;
+
+            let largura = imagem.width;
+            let altura = imagem.height;
+
+            if (largura > altura && largura > limite) {
+              altura = altura * (limite / largura);
+              largura = limite;
+            } else if (altura > limite) {
+              largura = largura * (limite / altura);
+              altura = limite;
+            }
+
+            canvas.width = largura;
+            canvas.height = altura;
+
+            const contexto = canvas.getContext("2d");
+            contexto.drawImage(imagem, 0, 0, largura, altura);
+
+            const fotoFinal = canvas.toDataURL("image/jpeg", 0.78);
+
+            img.src = fotoFinal;
+            area.classList.add("has-photo");
+
+            try {
+              localStorage.setItem("codelab-foto-" + nome, fotoFinal);
+            } catch (erro) {
+              alert("Não foi possível salvar a foto. Tente uma imagem menor.");
+            }
+          };
+
+          imagem.src = evento.target.result;
+        };
+
+        leitor.readAsDataURL(arquivo);
+      });
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
